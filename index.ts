@@ -13,6 +13,11 @@ app.use('/', createProxyMiddleware<Request, Response>({
   headers: {
     Connection: 'keep-alive',
   },
+  on: {
+    proxyRes: (proxyRes, req, res) => {
+      // 这里你需要设置响应头
+    },
+  },
 }));
 
 app.listen(PORT, () => {
