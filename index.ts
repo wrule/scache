@@ -10,7 +10,9 @@ app.use('/', createProxyMiddleware<Request, Response>({
   target: 'http://10.10.220.148:8081',
   changeOrigin: true,
   cookieDomainRewrite: '',
-  headers: { Connection: 'keep-alive' },
+  headers: {
+    Connection: 'keep-alive',
+  },
 }));
 
 app.listen(PORT, () => {
