@@ -6,7 +6,6 @@
   "module": "index.js",
   "scripts": {
     "dev": "tsx --watch index.ts",
-    "start": "pm2 start tsx index.ts",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
