@@ -16,12 +16,16 @@ app.use('/', createProxyMiddleware<Request, Response>({
   on: {
     proxyRes: (proxyRes, req, res) => {
       const url = req.url;
-      if (url.includes('/api')) {
+      const contentType = proxyRes.headers['content-type']?.toLocaleLowerCase().trim();
+      if (contentType?.startsWith('text/html')) {
+        // 强制浏览器缓存12小时
+      } else if (url.includes('/api')) {
+        // 强制不缓存
         proxyRes.headers['cache-control'] = 'no-store, no-cache, must-revalidate, proxy-revalidate';
         proxyRes.headers['pragma'] = 'no-cache';
         proxyRes.headers['expires'] = '0';
       } else {
-
+        // 强制浏览器缓存一周
       }
     },
   },
