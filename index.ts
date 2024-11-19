@@ -14,20 +14,25 @@ app.use('/', createProxyMiddleware<Request, Response>({
     Connection: 'keep-alive',
   },
   on: {
-    proxyRes: (proxyRes, req, res) => {
+    proxyRes: (proxyRes, req) => {
       const url = req.url;
       const contentType = proxyRes.headers['content-type']?.toLocaleLowerCase().trim();
-      if (contentType?.startsWith('text/html')) {
-        // 强制浏览器缓存3小时
-      } else if (url.includes('/api')) {
-        // 强制不缓存
-        proxyRes.headers['cache-control'] = 'no-store, no-cache, must-revalidate, proxy-revalidate';
-        proxyRes.headers['pragma'] = 'no-cache';
-        proxyRes.headers['expires'] = '0';
+
+      if (url.includes('/api')) {
+        proxyRes.headers['cache-control'] = 'no-store';
       } else {
-        // 强制浏览器缓存一周
+        const maxAge = contentType?.startsWith('text/html')
+          ? 3 * 60 * 60
+          : 7 * 24 * 60 * 60;
+        proxyRes.headers['cache-control'] = `public, max-age=${maxAge}, immutable`;
       }
-    },
+
+      delete proxyRes.headers['etag'];
+      delete proxyRes.headers['last-modified'];
+      delete proxyRes.headers['if-none-match'];
+      delete proxyRes.headers['if-modified-since'];
+      delete proxyRes.headers['pragma'];
+    }
   },
 }));
 
