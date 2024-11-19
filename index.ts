@@ -15,7 +15,14 @@ app.use('/', createProxyMiddleware<Request, Response>({
   },
   on: {
     proxyRes: (proxyRes, req, res) => {
-      // 这里你需要设置响应头
+      const url = req.url;
+      if (url.includes('/api')) {
+        proxyRes.headers['cache-control'] = 'no-store, no-cache, must-revalidate, proxy-revalidate';
+        proxyRes.headers['pragma'] = 'no-cache';
+        proxyRes.headers['expires'] = '0';
+      } else {
+
+      }
     },
   },
 }));
