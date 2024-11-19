@@ -18,7 +18,7 @@ app.use('/', createProxyMiddleware<Request, Response>({
       const url = req.url;
       const contentType = proxyRes.headers['content-type']?.toLocaleLowerCase().trim();
       if (contentType?.startsWith('text/html')) {
-        // 强制浏览器缓存12小时
+        // 强制浏览器缓存3小时
       } else if (url.includes('/api')) {
         // 强制不缓存
         proxyRes.headers['cache-control'] = 'no-store, no-cache, must-revalidate, proxy-revalidate';
