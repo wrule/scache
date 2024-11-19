@@ -3,11 +3,12 @@ import type { Request, Response } from 'express';
 import { createProxyMiddleware } from 'http-proxy-middleware';
 
 const PORT = 9091;
+const TARGET = 'http://10.10.222.157:8081';
 
 const app = express();
 
 app.use('/', createProxyMiddleware<Request, Response>({
-  target: 'http://10.10.220.148:8081',
+  target: TARGET,
   changeOrigin: true,
   cookieDomainRewrite: '',
   headers: {
