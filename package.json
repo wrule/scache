@@ -2,8 +2,11 @@
   "name": "scache",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "type": "module",
+  "module": "index.js",
   "scripts": {
+    "dev": "tsx --watch index.ts",
+    "start": "pm2 start tsx index.ts",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
